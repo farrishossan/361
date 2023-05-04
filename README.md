@@ -14,23 +14,23 @@ The server is structured like this:
    Expects b"Hello" from client, replies with b"World"
 
 
-import time
-import zmq
+    import time
+    import zmq
 
-context = zmq.Context()
-socket = context.socket(zmq.REP)
-socket.bind("tcp://*:5555")
+    context = zmq.Context()
+    socket = context.socket(zmq.REP)
+    socket.bind("tcp://*:5555")
 
-while True:
-    Wait for next request from client
-    message = socket.recv()
-    print(f"Received request: {message}")
 
-     Do some 'work'
-    time.sleep(1)
 
-     Send reply back to client
-    socket.send_string("World")
+    while True:
+         / Wait for next request from client
+      message = socket.recv()
+      print(f"Received request: {message}")Do some 'work'
+      time.sleep(1)
+
+        / Send reply back to client
+      socket.send_string("World")
 
 ----------------------------------------------------------------------
 
@@ -42,25 +42,25 @@ The client is like this:
    Sends "Hello" to server, expects "World" back
 
 
-import zmq
+    import zmq
 
-context = zmq.Context()
+    context = zmq.Context()
 
- Socket to talk to server
+    / Socket to talk to server
  
-print("Connecting to hello world server...")
-socket = context.socket(zmq.REQ)
-socket.connect("tcp://localhost:5555")
+    print("Connecting to hello world server...")
+    socket = context.socket(zmq.REQ)
+    socket.connect("tcp://localhost:5555")
 
- Do 10 requests, waiting each time for a response
+    / Do 10 requests, waiting each time for a response
  
-for request in range(10):
-    print(f"Sending request {request} ...")
-    socket.send_string("Hello")
+    for request in range(10):
+       print(f"Sending request {request} ...")
+       socket.send_string("Hello")
 
-    #  Get the reply.
-    message = socket.recv()
-    print(f"Received reply {request} [ {message} ]")
+    /  Get the reply.
+       message = socket.recv()
+       print(f"Received reply {request} [ {message} ]")
 
 
 
